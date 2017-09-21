@@ -22,7 +22,6 @@ ads = soup.find_all("table", summary="Ogłoszenie")
 
 for ad in ads:
 
-
     name = ad.find("td", valign="top")\
         .find("strong")\
         .get_text()\
@@ -39,12 +38,16 @@ for ad in ads:
             .find("small") \
             .get_text() \
             .strip()
+        flat.is_new = True
 
-        session.add(flat)
-        session.commit()
+    else:
+        flat.is_new = False
+
+    session.add(flat)
+    session.commit()
 
 
-flats = session.query(Flat).all()
+flats = session.query(Flat).filter_by(is_new = True).all()
 
 for flat in flats:
     print()
@@ -52,3 +55,4 @@ for flat in flats:
     print("link:", flat.link)
     print("cena:", flat.price)
     print("lokalizacja:", flat.location)
+    print("data dodania:", flat.created_date)

@@ -1,3 +1,5 @@
+import datetime
+
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy import DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -14,7 +16,7 @@ class Flat(Base):
     price = Column(String(8))
     link = Column(String(250))
     location = Column(String(250))
-    creation_date = Column(DateTime)
+    created_date = Column(DateTime, default=datetime.datetime.utcnow)
     is_new = Column(Boolean)
 
 engine  = create_engine('sqlite:///flats.db')
