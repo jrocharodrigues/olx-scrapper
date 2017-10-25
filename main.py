@@ -78,10 +78,10 @@ for x in range(1, 2):
 
 flats = session.query(Flat).filter_by(is_new = True).all()
 send_results(flats)
-#for flat in flats:
-#    print()
-#    print("title:", flat.name)
-#    print("link:", flat.link)
-#    print("price:", flat.price)
-#    print("location:", flat.location)
-#    print("date:", flat.created_date)
+for flat in flats:
+    print()
+    print("title:", flat.name.encode('utf-8'), 'plain', 'utf-8')
+    print("link:", flat.link.encode('utf-8'), 'plain', 'utf-8')
+    print("price:", flat.price.encode('utf-8'), 'plain', 'utf-8')
+    print("location:", flat.location.encode('utf-8'), 'plain', 'utf-8')
+    print("date:", flat.created_date.encode('utf-8'), 'plain', 'utf-8')
