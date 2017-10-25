@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Flat
 import smtplib
 from email.mime.text import MIMEText
+import datetime
 
 
 def send_results(flats):
@@ -80,8 +81,9 @@ flats = session.query(Flat).filter_by(is_new = True).all()
 send_results(flats)
 for flat in flats:
     print()
-    print("title:", flat.name.encode('utf-8'), 'plain', 'utf-8')
-    print("link:", flat.link.encode('utf-8'), 'plain', 'utf-8')
-    print("price:", flat.price.encode('utf-8'), 'plain', 'utf-8')
-    print("location:", flat.location.encode('utf-8'), 'plain', 'utf-8')
-    print("date:", flat.created_date.encode('utf-8'), 'plain', 'utf-8')
+    print(datetime.datetime.now())
+    print("title:", (flat.name).encode('utf-8'))
+    print("link:", (flat.link).encode('utf-8'))
+    print("price:", (flat.price).encode('utf-8'))
+    print("location:", (flat.location).encode('utf-8'))
+    print("date:", flat.created_date)
