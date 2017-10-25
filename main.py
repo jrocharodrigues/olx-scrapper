@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import requests
 from sqlalchemy import create_engine
@@ -12,13 +14,14 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-for x in range(1, 4):
-    url = "https://www.olx.pl/nieruchomosci/mieszkania/wynajem/gdansk/?search%5Bfilter_float_price%3Afrom%5D=600&search%5Bfilter_float_price%3Ato%5D=1200&search%5Bdist%5D=10&page={0}"
-    r = requests.get(url.format(x))
+for x in range(1, 2):
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+    url = "https://www.olx.pt/imoveis/apartamento-casa-a-venda/apartamentos-arrenda/gloria/?search%5Bdescription%5D=1&search%5Bdist%5D=10&search%5Bfilter_enum_tipologia%5D%5B0%5D=t1&search%5Bfilter_enum_tipologia%5D%5B1%5D=t2&page={0}"
+    r = requests.get(url.format(x), headers=headers)
     page = r.text
 
     soup = BeautifulSoup(page, "html.parser")
-    ads = soup.find_all("table", summary="Ogłoszenie")
+    ads = soup.find_all("table", summary="Anúncio")
 
     for ad in ads:
 
@@ -51,8 +54,8 @@ flats = session.query(Flat).filter_by(is_new = True).all()
 
 for flat in flats:
     print()
-    print("nazwa:", flat.name)
+    print("title:", flat.name)
     print("link:", flat.link)
-    print("cena:", flat.price)
-    print("lokalizacja:", flat.location)
-    print("data dodania:", flat.created_date)
+    print("price:", flat.price)
+    print("location:", flat.location)
+    print("date:", flat.created_date)
