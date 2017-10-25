@@ -5,6 +5,30 @@ import requests
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Flat
+import smtplib
+from email.mime.text import MIMEText
+
+
+def send_results(flats):
+    has_new_flats = False
+    message = ""
+    for flat in flats:
+        has_new_flats = True
+        message += flat.name + " - " + flat.location + " - " + flat.price + " " + flat.link + "\n"
+
+    if has_new_flats:
+        msg = MIMEText(message.encode('utf-8'), 'plain', 'utf-8')
+        msg['Subject'] = 'New Flats'
+        msg['From'] = 'jowood@blackbox.impecabel.com'
+        msg['To'] = 'jowood09@gmail.com'
+        s = smtplib.SMTP('localhost')
+        s.sendmail(me, [you], msg.as_string())
+        s.quit()
+
+
+
+
+    
 
 
 engine = create_engine('sqlite:///flats.db')
@@ -51,7 +75,7 @@ for x in range(1, 2):
 
 
 flats = session.query(Flat).filter_by(is_new = True).all()
-
+send_results(flats)
 for flat in flats:
     print()
     print("title:", flat.name)
