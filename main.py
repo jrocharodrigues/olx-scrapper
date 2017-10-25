@@ -18,9 +18,11 @@ def send_results(flats):
 
     if has_new_flats:
         msg = MIMEText(message.encode('utf-8'), 'plain', 'utf-8')
+        me = 'jowood@blackbox.impecabel.com'
+        you = 'jowood09@gmail.com'
         msg['Subject'] = 'New Flats'
-        msg['From'] = 'jowood@blackbox.impecabel.com'
-        msg['To'] = 'jowood09@gmail.com'
+        msg['From'] = me
+        msg['To'] = you
         s = smtplib.SMTP('localhost')
         s.sendmail(me, [you], msg.as_string())
         s.quit()
