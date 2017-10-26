@@ -59,7 +59,7 @@ for x in range(1, 4):
                 .get_text()\
                 .strip()
             flat.link = ad.get('href')
-            flat.price = ad.find("h5").get_text().strip()
+            flat.price = ad.find("h5").get_text().replace(" ", "")
             flat.location = ad.find("span", {'class':'hidden-xs'}) \
                 .get_text() \
                 .strip()
