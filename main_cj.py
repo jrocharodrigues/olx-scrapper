@@ -34,7 +34,7 @@ def send_results(flats):
     
 
 
-engine = create_engine('sqlite:///flats_cj.db')
+engine = create_engine('sqlite:////home/jowood/olx-scrapper/flats_cj.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
