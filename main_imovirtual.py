@@ -60,6 +60,7 @@ for x in range(1, 2):
 
         if not flat:
             flat = Flat()
+            flat.add_id = "1111"
             flat.name = name
             flat.link = ad.find("a").get('href')
             flat.price =ad.find("li", {'class':'offer-item-price'}).get_text().strip()
