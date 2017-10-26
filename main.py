@@ -15,8 +15,7 @@ def send_results(flats):
     message = ""
     for flat in flats:
         has_new_flats = True
-        message += flat.name + " - " + flat.location + " - " + flat.price + " " + flat.link + "\r\n"
-	message += "NEWLINE\r\n"
+        message += flat.name + " - " + flat.location + " - " + flat.price + " " + flat.link + "\r\n\r\n"
 
     if has_new_flats:
         msg = MIMEText(message.encode('utf-8'), 'plain', 'utf-8')
