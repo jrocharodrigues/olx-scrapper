@@ -29,12 +29,8 @@ def send_results(flats):
         s.quit()
 
 
-
-
-    
-
-
 engine = create_engine('sqlite:////home/jowood/olx-scrapper/flats_cj.db')
+#engine = create_engine('sqlite:///flats_cj.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -52,15 +48,16 @@ for x in range(1, 4):
     #print(ads)
     for ad in ads:
 
-        name = ad.find("h2")\
-            .get_text()\
-            .strip()
+        add_id = ad.get("id")
 
-        flat = session.query(Flat).filter_by(name = name).one_or_none()
+        flat = session.query(Flat).filter_by(add_id = add_id).one_or_none()
         #print name
         if not flat:
             flat = Flat()
-            flat.name = name
+            flat.add_id = add_id
+            flat.name = ad.find("h2")\
+                .get_text()\
+                .strip()
             flat.link = ad.get('href')
             flat.price = ad.find("h5").get_text().strip()
             flat.location = ad.find("span", {'class':'hidden-xs'}) \
@@ -77,9 +74,11 @@ for x in range(1, 4):
 
 flats = session.query(Flat).filter_by(is_new = True).all()
 send_results(flats)
+
 for flat in flats:
     print()
     print(datetime.datetime.now())
+    print("add_id:", (flat.add_id).encode('utf-8'))
     print("title:", (flat.name).encode('utf-8'))
     print("link:", (flat.link).encode('utf-8'))
     print("price:", (flat.price).encode('utf-8'))
