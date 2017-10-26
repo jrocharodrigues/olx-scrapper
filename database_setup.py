@@ -21,7 +21,7 @@ class Flat(Base):
 
 db_name = 'flats'
 if len(sys.argv) > 1:
-	db_name += sys.argv[1]
+	db_name += '_' + sys.argv[1]
 	
 engine  = create_engine('sqlite:///' + db_name + '.db')
 
