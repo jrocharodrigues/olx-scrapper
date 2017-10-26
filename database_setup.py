@@ -12,6 +12,7 @@ Base = declarative_base()
 class Flat(Base):
     __tablename__ = 'Flat'
     id = Column(Integer, primary_key=True)
+    add_id = Column(String(80))
     name = Column(String(80))
     price = Column(String(8))
     link = Column(String(250))
