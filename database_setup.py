@@ -1,5 +1,5 @@
 import datetime
-
+import sys
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy import DateTime
 from sqlalchemy.ext.declarative import declarative_base
@@ -19,7 +19,11 @@ class Flat(Base):
     created_date = Column(DateTime, default=datetime.datetime.utcnow)
     is_new = Column(Boolean)
 
-engine  = create_engine('sqlite:///flats.db')
+db_name = 'flats'
+if len(sys.argv) > 1:
+	db_name += sys.argv[1]
+	
+engine  = create_engine('sqlite:///' + db_name + '.db')
 
 Base.metadata.create_all(engine)
 
